@@ -1,10 +1,10 @@
 "use client";
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { BsLightningChargeFill } from 'react-icons/bs';
-import { FaAws, FaBrain, FaChartLine, FaChurch, FaCloud, FaCode, FaCogs, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaMobile, FaNetworkWired, FaProjectDiagram, FaRocket, FaServer, FaSyncAlt, FaTruck, FaUsers, FaVideo, FaCheckCircle, FaGithub, FaDatabase, FaChartBar, FaFilm, FaRobot } from 'react-icons/fa';
+import { FaAws, FaBrain, FaChartLine, FaChurch, FaCloud, FaCode, FaCogs, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaMobile, FaNetworkWired, FaProjectDiagram, FaRocket, FaServer, FaSyncAlt, FaTruck, FaUsers, FaVideo, FaCheckCircle, FaGithub, FaDatabase, FaChartBar, FaFilm, FaRobot, FaEnvelope, FaLinkedin, FaPaperPlane, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { IoIosSpeedometer } from 'react-icons/io';
 import { SiCplusplus, SiDocker, SiFigma, SiGit, SiJavascript, SiMongodb, SiMysql, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript } from 'react-icons/si';
 import { 
@@ -28,47 +28,69 @@ const Spline = dynamic(() => import('@splinetool/react-spline'), {
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [splineLoaded, setSplineLoaded] = useState(0); // Track loaded Spline scenes
+  const [splineLoaded, setSplineLoaded] = useState(0);
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
   
-  // Function to handle Spline load
-  const handleSplineLoad = () => {
+  // Simplified Spline load handler
+  const handleSplineLoad = useCallback(() => {
     setSplineLoaded(prev => prev + 1);
-  };
+  }, []);
 
-  // Check when all Spline scenes are loaded
+  // Simplified loading check
   useEffect(() => {
-    if (splineLoaded >= 3) { // We have 3 Spline scenes
+    if (splineLoaded >= 4) { // We have 4 Spline scenes
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000); // Add a small delay for smooth transition
+      }, 1000);
     }
   }, [splineLoaded]);
 
-  // Optimize scroll performance
-  const optimizedScroll = useCallback(() => {
-    const scrollOptions = {
-      threshold: 0.1,
-      rootMargin: "50px",
+  // Preload essential assets
+  useEffect(() => {
+    const preloadAssets = async () => {
+      // Preload images and other assets here
+      try {
+        await Promise.all([
+          // Add any critical images/assets to preload
+          new Promise(resolve => {
+            const img = new Image();
+            img.onload = resolve;
+            img.src = '/your-critical-image.png'; // Add your critical images
+          }),
+          // Add more assets as needed
+        ]);
+        setAssetsLoaded(true);
+      } catch (error) {
+        console.error('Asset preloading error:', error);
+        setAssetsLoaded(true); // Continue anyway
+      }
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, scrollOptions);
+    preloadAssets();
+  }, []);
 
-    document.querySelectorAll('.motion-div').forEach((el) => {
+  // Add intersection observer for smooth scrolling
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px',
+      }
+    );
+
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
       observer.observe(el);
     });
 
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    optimizedScroll();
-  }, [optimizedScroll]);
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -127,7 +149,9 @@ export default function Home() {
 
   return (
     <>
-      {isLoading && <LoadingScreen />}
+      <AnimatePresence>
+        {isLoading && <LoadingScreen />}
+      </AnimatePresence>
       
       <main className="relative overflow-x-hidden" ref={containerRef}>
         {/* First Spline scene */}
@@ -826,6 +850,162 @@ export default function Home() {
                   </div>
                 </div>
               </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="min-h-screen relative">
+          <div className="absolute inset-0">
+            <Spline
+              scene="https://prod.spline.design/sgbgUAfCvLp6vhXa/scene.splinecode"
+              onLoad={handleSplineLoad}
+            />
+          </div>
+
+          <div className="relative z-10 container mx-auto px-6 py-20">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h2 className="text-6xl font-bold text-white mb-6 drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                Let's Connect
+              </h2>
+              <div className="w-32 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto mb-8"></div>
+              <p className="text-xl text-white max-w-2xl mx-auto leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                Ready to collaborate or just want to say hi? Reach out through any of these platforms!
+              </p>
+            </motion.div>
+
+            {/* Social Media Grid */}
+            <motion.div 
+              className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
+              variants={{
+                show: {
+                  transition: {
+                    staggerChildren: 0.1
+                  }
+                }
+              }}
+              initial="hidden"
+              animate="show"
+            >
+              {[
+                {
+                  icon: FaGithub,
+                  label: "GitHub",
+                  link: "https://github.com/yourusername",
+                  color: "from-gray-900 to-black",
+                  shadowColor: "shadow-black/30"
+                },
+                {
+                  icon: FaLinkedin,
+                  label: "LinkedIn",
+                  link: "https://linkedin.com/in/yourusername",
+                  color: "from-blue-600 to-blue-800",
+                  shadowColor: "shadow-blue-500/30"
+                },
+                {
+                  icon: FaEnvelope,
+                  label: "Email",
+                  link: "mailto:your.email@example.com",
+                  color: "from-purple-600 to-pink-600",
+                  shadowColor: "shadow-purple-500/30"
+                },
+                {
+                  icon: FaTwitter,
+                  label: "Twitter",
+                  link: "https://twitter.com/yourusername",
+                  color: "from-sky-500 to-sky-700",
+                  shadowColor: "shadow-sky-500/30"
+                }
+              ].map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col items-center"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    show: { opacity: 1, y: 0 }
+                  }}
+                  whileHover={{ y: -5 }}
+                >
+                  <motion.div
+                    className={`w-24 h-24 bg-gradient-to-br ${social.color} rounded-2xl
+                      flex items-center justify-center shadow-xl ${social.shadowColor}
+                      backdrop-blur-sm border border-white/10 group-hover:border-white/20
+                      transition-all duration-300`}
+                    whileHover={{ 
+                      scale: 1.1,
+                      rotate: [0, -10, 10, 0],
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <social.icon className="text-4xl text-white transform transition-transform
+                      duration-300 group-hover:scale-110" />
+                  </motion.div>
+                  <span className="mt-4 text-lg font-medium text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                    {social.label}
+                  </span>
+                </motion.a>
+              ))}
+            </motion.div>
+
+            {/* Additional Contact Info */}
+            <motion.div 
+              className="mt-20 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className="bg-black/30 backdrop-blur-md rounded-2xl p-8 max-w-2xl mx-auto
+                border border-white/10 shadow-2xl">
+                <h3 className="text-2xl font-bold text-white mb-4">Quick Links</h3>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <motion.a
+                    href="/resume.pdf"
+                    className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600
+                      rounded-xl text-white font-medium flex items-center gap-2
+                      hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FaFile className="text-lg" />
+                    Resume
+                  </motion.a>
+                  <motion.a
+                    href="#projects"
+                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600
+                      rounded-xl text-white font-medium flex items-center gap-2
+                      hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FaRocket className="text-lg" />
+                    Projects
+                  </motion.a>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating Animation Elements */}
+            <motion.div
+              className="absolute top-20 right-10 w-20 h-20 opacity-20"
+              animate={{
+                y: [0, 20, 0],
+                rotate: [0, 360],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <FaCode className="text-white w-full h-full" />
             </motion.div>
           </div>
         </section>
