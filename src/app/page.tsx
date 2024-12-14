@@ -4,9 +4,17 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { BsLightningChargeFill } from 'react-icons/bs';
-import { FaAws, FaBrain, FaChartLine, FaChurch, FaCloud, FaCode, FaCogs, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaMobile, FaNetworkWired, FaProjectDiagram, FaRocket, FaServer, FaSyncAlt, FaTruck, FaUsers, FaVideo } from 'react-icons/fa';
+import { FaAws, FaBrain, FaChartLine, FaChurch, FaCloud, FaCode, FaCogs, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaMobile, FaNetworkWired, FaProjectDiagram, FaRocket, FaServer, FaSyncAlt, FaTruck, FaUsers, FaVideo, FaCheckCircle, FaGithub, FaDatabase, FaChartBar, FaFilm, FaRobot } from 'react-icons/fa';
 import { IoIosSpeedometer } from 'react-icons/io';
 import { SiCplusplus, SiDocker, SiFigma, SiGit, SiJavascript, SiMongodb, SiMysql, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript } from 'react-icons/si';
+import { 
+  FaBitcoin, 
+  FaStar, 
+  FaFile, 
+  FaWallet, 
+  FaArrowRight 
+} from 'react-icons/fa';
+
 
 const Spline = dynamic(() => import('@splinetool/react-spline'), {
   ssr: false,
@@ -74,7 +82,7 @@ export default function Home() {
       {/* First section with the first Spline scene */}
       <section id="home" className="h-screen relative">
         <Spline
-          scene="https://prod.spline.design/Xp4dj0fJNrfSJNuH/scene.splinecode" 
+        scene="https://prod.spline.design/C7EGsyMouJ4K5BH9/scene.splinecode" 
         />
         
         {/* Add this scroll indicator */}
@@ -257,7 +265,7 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-　　 　　　　　　<div className="grid md:grid-cols-2 gap-8">
+　　 　　　　　<div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-8">
                   <div className="bg-white/30 p-6 rounded-xl">
                     <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
@@ -404,20 +412,370 @@ export default function Home() {
 
           
         </div>
-         {/* Projects section with Spline scene */}
-         {/* Projects Section */}
+     {/* Projects Section */}
 <section id="projects" className="min-h-screen relative">
   <div className="absolute inset-0">
-    <Spline
-        scene="https://prod.spline.design/bkrOa4QKtd9kGFmk/scene.splinecode" 
-        />
+    <Spline scene="https://prod.spline.design/bkrOa4QKtd9kGFmk/scene.splinecode" />
   </div>
 
-  
+  <div className="relative z-10 container mx-auto px-6 py-20">
+    {/* Projects Section Header */}
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">Featured Projects</h2>
+      <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
+    </div>
+
+    <motion.div className="grid md:grid-cols-2 gap-8">
+      {/* AstroFlow Card */}
+      <motion.div 
+        className="bg-black/80 rounded-2xl overflow-hidden
+          border-2 border-white/20 shadow-2xl hover:border-purple-500/50
+          transform-gpu transition-all duration-300 hover:scale-[1.02]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -5 }}
+      >
+        <div className="relative h-48 bg-gradient-to-br from-blue-900 to-purple-900 p-6">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="text-3xl font-bold text-white mb-2">AstroFlow</h3>
+              <p className="text-purple-300 font-medium text-lg">
+                AI-Driven Document Collaboration
+              </p>
+            </div>
+            <div className="bg-black/30 p-3 rounded-xl">
+              <FaBrain className="text-5xl text-purple-400" />
+            </div>
+          </div>
+          
+          <div className="absolute bottom-4 left-6 right-6 flex justify-between">
+            <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+              <FaUsers className="text-purple-400" />
+              <span className="text-white font-medium">5k+ Users</span>
+            </div>
+            <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+              <FaCloud className="text-blue-400" />
+              <span className="text-white font-medium">Enterprise</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-6 space-y-6">
+          <p className="text-gray-300 text-lg leading-relaxed">
+            Transform teamwork with innovative document collaboration. Combining real-time editing 
+            with AI-powered features for enhanced productivity.
+          </p>
+
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-purple-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Real-time collaboration with AI assistance</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-purple-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Version control & secure cloud storage</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-purple-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Cross-platform accessibility</span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              React
+            </span>
+            <span className="bg-green-900/80 text-green-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              Node.js
+            </span>
+            <span className="bg-purple-900/80 text-purple-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              TensorFlow
+            </span>
+            <span className="bg-orange-900/80 text-orange-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              AWS
+            </span>
+          </div>
+
+          <div className="flex gap-4 pt-2">
+            <button className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 
+              text-white py-3 rounded-xl hover:opacity-90 transition-opacity 
+              flex items-center justify-center gap-2 font-medium text-lg">
+              <span>View Project</span>
+              <FaArrowRight />
+            </button>
+            <a href="https://github.com/yourusername/astroflow" 
+              className="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer">
+              <FaGithub className="text-2xl text-white" />
+            </a>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ASTRO Fitness Card */}
+      <motion.div 
+        className="bg-black/80 rounded-2xl overflow-hidden
+          border-2 border-white/20 shadow-2xl hover:border-green-500/50
+          transform-gpu transition-all duration-300 hover:scale-[1.02]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -5 }}
+      >
+        <div className="relative h-48 bg-gradient-to-br from-green-900 to-teal-900 p-6">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="text-3xl font-bold text-white mb-2">ASTRO Fitness</h3>
+              <p className="text-teal-300 font-medium text-lg">
+                Redefining Wellness Through Technology
+              </p>
+            </div>
+            <div className="bg-black/30 p-3 rounded-xl">
+              <FaRocket className="text-5xl text-teal-400" />
+            </div>
+          </div>
+          
+          <div className="absolute bottom-4 left-6 right-6 flex justify-between">
+            <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+              <FaMobile className="text-teal-400" />
+              <span className="text-white font-medium">Mobile App</span>
+            </div>
+            <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+              <FaUsers className="text-green-400" />
+              <span className="text-white font-medium">10k+ Users</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-6 space-y-6">
+          <p className="text-gray-300 text-lg leading-relaxed">
+            A comprehensive fitness application crafted to empower users on their wellness journey, 
+            integrating fitness, nutrition, and sustainability.
+          </p>
+
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-green-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Custom workout plans with AI-driven recommendations</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-green-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Comprehensive nutrition tracking and meal planning</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-green-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Community features and progress sharing</span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              React Native
+            </span>
+            <span className="bg-green-900/80 text-green-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              Node.js
+            </span>
+            <span className="bg-cyan-900/80 text-cyan-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              MongoDB
+            </span>
+          </div>
+
+          <div className="flex gap-4 pt-2">
+            <button className="flex-1 bg-gradient-to-r from-green-600 to-teal-600 
+              text-white py-3 rounded-xl hover:opacity-90 transition-opacity 
+              flex items-center justify-center gap-2 font-medium text-lg">
+              <span>View Project</span>
+              <FaArrowRight />
+            </button>
+            <a href="https://github.com/yourusername/astro-fitness" 
+              className="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer">
+              <FaGithub className="text-2xl text-white" />
+            </a>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ASTRO Crypto Card */}
+      <motion.div 
+        className="bg-black/80 rounded-2xl overflow-hidden
+          border-2 border-white/20 shadow-2xl hover:border-orange-500/50
+          transform-gpu transition-all duration-300 hover:scale-[1.02]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -5 }}
+      >
+        <div className="relative h-48 bg-gradient-to-br from-orange-900 to-yellow-900 p-6">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="text-3xl font-bold text-white mb-2">ASTRO Crypto</h3>
+              <p className="text-yellow-300 font-medium text-lg">
+                Empowering Cryptocurrency Enthusiasts
+              </p>
+            </div>
+            <div className="bg-black/30 p-3 rounded-xl">
+              <FaBitcoin className="text-5xl text-yellow-400" />
+            </div>
+          </div>
+          
+          <div className="absolute bottom-4 left-6 right-6 flex justify-between">
+            <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+              <FaWallet className="text-orange-400" />
+              <span className="text-white font-medium">Crypto Platform</span>
+            </div>
+            <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+              <FaChartLine className="text-yellow-400" />
+              <span className="text-white font-medium">Real-time Data</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Complete the ASTRO Crypto Card content */}
+        <div className="p-6 space-y-6">
+          <p className="text-gray-300 text-lg leading-relaxed">
+            A state-of-the-art platform for tracking cryptocurrency prices, analyzing market trends, 
+            and managing portfolios with advanced tools for both novice and seasoned traders.
+          </p>
+
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-orange-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Real-time tracking of top cryptocurrencies</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-orange-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Customizable alerts for price changes and trends</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-orange-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Professional-grade charts and technical analysis</span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              React
+            </span>
+            <span className="bg-green-900/80 text-green-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              Node.js
+            </span>
+            <span className="bg-yellow-900/80 text-yellow-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              Web3.js
+            </span>
+            <span className="bg-red-900/80 text-red-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              Redis
+            </span>
+          </div>
+
+          <div className="flex gap-4 pt-2">
+            <button className="flex-1 bg-gradient-to-r from-orange-600 to-yellow-600 
+              text-white py-3 rounded-xl hover:opacity-90 transition-opacity 
+              flex items-center justify-center gap-2 font-medium text-lg">
+              <span>View Project</span>
+              <FaArrowRight />
+            </button>
+            <a href="https://github.com/yourusername/astro-crypto" 
+              className="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer">
+              <FaGithub className="text-2xl text-white" />
+            </a>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* AstroFlicks Card */}
+      <motion.div 
+        className="bg-black/80 rounded-2xl overflow-hidden
+          border-2 border-white/20 shadow-2xl hover:border-red-500/50
+          transform-gpu transition-all duration-300 hover:scale-[1.02]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -5 }}
+      >
+        <div className="relative h-48 bg-gradient-to-br from-red-900 to-pink-900 p-6">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="text-3xl font-bold text-white mb-2">AstroFlicks</h3>
+              <p className="text-pink-300 font-medium text-lg">
+                Your Personalized Entertainment Guide
+              </p>
+            </div>
+            <div className="bg-black/30 p-3 rounded-xl">
+              <FaVideo className="text-5xl text-pink-400" />
+            </div>
+          </div>
+          
+          <div className="absolute bottom-4 left-6 right-6 flex justify-between">
+            <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+              <FaFilm className="text-pink-400" />
+              <span className="text-white font-medium">Entertainment</span>
+            </div>
+            <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+              <FaRobot className="text-red-400" />
+              <span className="text-white font-medium">AI-Powered</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-6 space-y-6">
+          <p className="text-gray-300 text-lg leading-relaxed">
+            An innovative application designed to simplify the decision-making process for movie and TV show enthusiasts,
+            leveraging web scraping and AI for personalized recommendations.
+          </p>
+
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-red-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Intelligent search with advanced filtering options</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-red-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Data-driven recommendations from multiple sources</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <FaCheckCircle className="text-red-400 mt-1.5 flex-shrink-0 text-lg" />
+              <span className="text-gray-200">Custom watchlists and progress tracking</span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <span className="bg-yellow-900/80 text-yellow-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              Python
+            </span>
+            <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              React
+            </span>
+            <span className="bg-green-900/80 text-green-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              SQLite
+            </span>
+            <span className="bg-purple-900/80 text-purple-200 px-4 py-1.5 rounded-full text-sm font-medium">
+              BeautifulSoup
+            </span>
+          </div>
+
+          <div className="flex gap-4 pt-2">
+            <button className="flex-1 bg-gradient-to-r from-red-600 to-pink-600 
+              text-white py-3 rounded-xl hover:opacity-90 transition-opacity 
+              flex items-center justify-center gap-2 font-medium text-lg">
+              <span>Explore Project</span>
+              <FaArrowRight />
+            </button>
+            <a href="https://github.com/yourusername/astroflicks" 
+              className="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer">
+              <FaGithub className="text-2xl text-white" />
+            </a>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  </div>
 </section>
          
-         
-      </section>
+ </section>
     </main>
   );
 }
