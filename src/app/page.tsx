@@ -2,10 +2,14 @@
 
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
-import { FaCode, FaLaptopCode, FaRobot, FaGraduationCap, FaUsers, FaDatabase, FaServer, FaMobile, FaAws, FaJava, FaCertificate, FaClock, FaProjectDiagram, FaTools, FaLinkedin, FaGithub, FaEnvelope, FaStar } from 'react-icons/fa';
+import { FaCode, FaLaptopCode, FaRobot, FaGraduationCap, FaUsers, FaDatabase, FaServer, FaMobile, FaAws, FaJava, FaCertificate, FaClock, FaProjectDiagram, FaTools, FaLinkedin, FaGithub, FaEnvelope, FaStar, FaBrain, FaLightbulb, FaRocket, FaSyncAlt, FaCloud, FaTruck, FaCogs, FaHandshake, FaChurch, FaVideo, FaNetworkWired, FaChartLine } from 'react-icons/fa';
 import { SiJavascript, SiPython, SiReact, SiGit, SiCplusplus, SiMysql, SiMongodb, SiDocker, SiTailwindcss, SiTypescript, SiNodedotjs, SiFigma } from 'react-icons/si';
 import { BiCodeBlock } from 'react-icons/bi';
 import { BsLightningChargeFill } from 'react-icons/bs';
+import { IoIosSpeedometer } from 'react-icons/io';
+import { useScroll, useTransform } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { BsCodeSlash } from 'react-icons/bs';
 
 const Spline = dynamic(() => import('@splinetool/react-spline'), {
   ssr: false,
@@ -59,17 +63,88 @@ export default function Home() {
     }
   ];
 
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.1], [1, 0.8]);
+
   return (
-    <main className="relative overflow-x-hidden">
+    <main className="relative overflow-x-hidden" ref={containerRef}>
       {/* First section with the first Spline scene */}
-      <section className="h-screen relative">
+      <section id="home" className="h-screen relative">
         <Spline
           scene="https://prod.spline.design/Xp4dj0fJNrfSJNuH/scene.splinecode" 
         />
+        
+        {/* Add this scroll indicator */}
+        <motion.div 
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          style={{ opacity, scale }}
+        >
+          <motion.div 
+            className="flex flex-col items-center gap-2"
+            initial={{ y: 0 }}
+            animate={{ 
+              y: [0, 10, 0],
+              transition: {
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
+          >
+            <div className="text-white/80 font-medium tracking-wide text-sm">
+              Scroll Down
+            </div>
+            <div className="w-6 h-10 border-2 border-white/50 rounded-full p-1">
+              <motion.div 
+                className="w-full h-3 bg-white/80 rounded-full"
+                animate={{
+                  y: [0, 14, 0],
+                  transition: {
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }
+                }}
+              />
+            </div>
+            <motion.div
+              className="w-4 h-4"
+              animate={{
+                y: [0, 5, 0],
+                transition: {
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.2
+                }
+              }}
+            >
+              <svg 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                className="w-full h-full text-white/80"
+              >
+                <path 
+                  d="M12 4L12 20M12 20L18 14M12 20L6 14" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* About section with second Spline scene */}
-      <section className="min-h-screen relative">
+      <section id="about" className="min-h-screen relative">
         <div className="absolute inset-0">
           <Spline
         scene="https://prod.spline.design/Lq54kq3C9dU3aA0G/scene.splinecode" 
@@ -111,8 +186,14 @@ export default function Home() {
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-2 h-16 bg-gradient-to-b from-purple-600 to-blue-600"></div>
                 <div>
-                  <h2 className="text-4xl font-bold text-gray-800">About Me</h2>
-                  <p className="text-xl text-gray-600 mt-2">Transforming Ideas into Digital Reality</p>
+                  <h2 className="text-4xl font-bold text-gray-800 flex items-center gap-3">
+                    <FaBrain className="text-purple-500 text-5xl" />
+                    About Me
+                  </h2>
+                  <p className="text-xl text-gray-600 mt-2 flex items-center gap-2">
+                    <FaLightbulb className="text-yellow-500" />
+                    Transforming Ideas into Digital Reality
+                  </p>
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-8">
@@ -130,22 +211,32 @@ export default function Home() {
                 </div>
                 <div className="space-y-6">
                   <div className="bg-white/30 p-6 rounded-xl">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-3">Core Values</h3>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                      <FaRocket className="text-blue-500" />
+                      Core Values
+                    </h3>
                     <ul className="space-y-3">
                       <li className="flex items-center gap-3 text-gray-700">
-                        <span className="text-purple-600">▹</span> Innovation-Driven Development
+                        <FaLightbulb className="text-yellow-500 text-xl" /> 
+                        Innovation-Driven Development
                       </li>
                       <li className="flex items-center gap-3 text-gray-700">
-                        <span className="text-purple-600">▹</span> Continuous Learning
+                        <FaSyncAlt className="text-green-500 text-xl" /> 
+                        Continuous Learning
                       </li>
                       <li className="flex items-center gap-3 text-gray-700">
-                        <span className="text-purple-600">▹</span> Collaborative Problem-Solving
+                        <FaUsers className="text-blue-500 text-xl" /> 
+                        Collaborative Problem-Solving
                       </li>
                     </ul>
                   </div>
                   <div className="bg-white/30 p-6 rounded-xl">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-3">Current Focus</h3>
-                    <p className="text-gray-700">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                      <FaCloud className="text-cyan-500" />
+                      Current Focus
+                    </h3>
+                    <p className="text-gray-700 flex items-center gap-2">
+                      <BsLightningChargeFill className="text-yellow-500" />
                       Exploring cutting-edge web technologies and cloud computing solutions while
                       maintaining a strong foundation in computer science fundamentals.
                     </p>
@@ -155,57 +246,62 @@ export default function Home() {
             </motion.div>
 
             {/* Professional Journey - Enhanced */}
-            <motion.div 
-              className="glass-card p-10 rounded-2xl shadow-xl"
-              {...fadeIn}
-            >
+            <motion.div id="experience" className="glass-card p-10 rounded-2xl shadow-xl">
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-2 h-16 bg-gradient-to-b from-blue-600 to-cyan-600"></div>
                 <div>
-                  <h2 className="text-4xl font-bold text-gray-800">Professional Journey</h2>
-                  <p className="text-xl text-gray-600 mt-2">Building Tomorrow's Solutions Today</p>
+                  <h2 className="text-4xl font-bold text-gray-800 flex items-center gap-3">
+                    <FaProjectDiagram className="text-blue-500 text-5xl" />
+                    Professional Journey
+                  </h2>
+                  <p className="text-xl text-gray-600 mt-2 flex items-center gap-2">
+                    <FaRocket className="text-orange-500" />
+                    Building Tomorrow's Solutions Today
+                  </p>
                 </div>
               </div>
               
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-8">
-                  <div className="bg-white/30 p-6 rounded-xl transform hover:scale-105 transition-all">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                  <div className="bg-white/30 p-6 rounded-xl">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                      <FaTruck className="text-blue-600" />
                       Software Developer Intern @ TQL
                     </h3>
                     <p className="text-gray-600 mb-4">Fall 2024</p>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3 text-gray-700">
-                        <span className="text-blue-600 mt-1">▹</span>
+                        <FaCogs className="text-purple-500 mt-1" />
                         Developing innovative logistics solutions using cutting-edge technologies
                       </li>
                       <li className="flex items-start gap-3 text-gray-700">
-                        <span className="text-blue-600 mt-1">▹</span>
+                        <IoIosSpeedometer className="text-green-500 mt-1" />
                         Implementing scalable features that enhance operational efficiency
                       </li>
                       <li className="flex items-start gap-3 text-gray-700">
-                        <span className="text-blue-600 mt-1">▹</span>
+                        <FaHandshake className="text-blue-500 mt-1" />
                         Collaborating with cross-functional teams to deliver robust solutions
                       </li>
                     </ul>
                   </div>
 
-                  <div className="bg-white/30 p-6 rounded-xl transform hover:scale-105 transition-all">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                  <div className="bg-white/30 p-6 rounded-xl">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                      <FaLaptopCode className="text-cyan-600" />
                       Full-Stack Developer @ TechElevate
                     </h3>
                     <p className="text-gray-600 mb-4">Summer 2024 – Present</p>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3 text-gray-700">
-                        <span className="text-blue-600 mt-1">▹</span>
+                        <FaMobile className="text-purple-500 mt-1" />
                         Leading development of responsive web applications
                       </li>
                       <li className="flex items-start gap-3 text-gray-700">
-                        <span className="text-blue-600 mt-1">▹</span>
+                        <FaServer className="text-green-500 mt-1" />
                         Implementing modern frontend frameworks and backend solutions
                       </li>
                       <li className="flex items-start gap-3 text-gray-700">
-                        <span className="text-blue-600 mt-1">▹</span>
+                        <IoIosSpeedometer className="text-orange-500 mt-1" />
                         Optimizing application performance and user experience
                       </li>
                     </ul>
@@ -213,38 +309,42 @@ export default function Home() {
                 </div>
 
                 <div className="space-y-8">
-                  <div className="bg-white/30 p-6 rounded-xl transform hover:scale-105 transition-all">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                  <div className="bg-white/30 p-6 rounded-xl">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                      <FaChurch className="text-purple-600" />
                       IT Specialist @ Ghana SDA Church
                     </h3>
                     <p className="text-gray-600 mb-4">2023 – Present</p>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3 text-gray-700">
-                        <span className="text-blue-600 mt-1">▹</span>
+                        <FaVideo className="text-red-500 mt-1" />
                         Revolutionized digital worship experience through modern streaming solutions
                       </li>
                       <li className="flex items-start gap-3 text-gray-700">
-                        <span className="text-blue-600 mt-1">▹</span>
+                        <FaNetworkWired className="text-blue-500 mt-1" />
                         Led technical team in implementing and maintaining AV systems
                       </li>
                       <li className="flex items-start gap-3 text-gray-700">
-                        <span className="text-blue-600 mt-1">▹</span>
+                        <FaCloud className="text-cyan-500 mt-1" />
                         Developed digital solutions for remote community engagement
                       </li>
                     </ul>
                   </div>
 
                   <div className="bg-white/40 p-6 rounded-xl">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-3">Key Achievements</h3>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                      <FaChartLine className="text-green-500" />
+                      Key Achievements
+                    </h3>
                     <ul className="space-y-3">
                       <li className="flex items-center gap-3 text-gray-700">
-                        <span className="text-blue-600">★</span> Led 3 major technical projects
+                        <FaProjectDiagram className="text-purple-500" /> Led 3 major technical projects
                       </li>
                       <li className="flex items-center gap-3 text-gray-700">
-                        <span className="text-blue-600">★</span> Improved system efficiency by 40%
+                        <IoIosSpeedometer className="text-blue-500" /> Improved system efficiency by 40%
                       </li>
                       <li className="flex items-center gap-3 text-gray-700">
-                        <span className="text-blue-600">★</span> Mentored 5 junior developers
+                        <FaProjectDiagram className="text-purple-500" /> Mentored 5 junior developers
                       </li>
                     </ul>
                   </div>
@@ -253,10 +353,7 @@ export default function Home() {
             </motion.div>
 
             {/* Technical Arsenal Section */}
-            <motion.div 
-              className="glass-card p-10 rounded-2xl shadow-xl"
-              {...fadeIn}
-            >
+            <motion.div id="skills" className="glass-card p-10 rounded-2xl shadow-xl">
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-2 h-16 bg-gradient-to-b from-green-500 to-emerald-600"></div>
                 <div>
@@ -302,6 +399,31 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </motion.div>
+
+            {/* Projects Section */}
+            <motion.div 
+              id="projects" 
+              className="glass-card p-10 rounded-2xl shadow-xl"
+              {...fadeIn}
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-2 h-16 bg-gradient-to-b from-pink-500 to-purple-600"></div>
+                <div>
+                  <h2 className="text-4xl font-bold text-gray-800 flex items-center gap-3">
+                    <BsCodeSlash className="text-pink-500 text-5xl" />
+                    Projects
+                  </h2>
+                  <p className="text-xl text-gray-600 mt-2">
+                    Showcasing My Creative Work
+                  </p>
+                </div>
+              </div>
+
+              {/* Add your projects content here */}
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Project cards will go here */}
               </div>
             </motion.div>
 
