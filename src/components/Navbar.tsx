@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsPerson, BsCodeSlash, BsChevronDown } from "react-icons/bs";
-import { FaTools, FaBriefcase } from "react-icons/fa";
+import { FaTools, FaBriefcase, FaEnvelope } from "react-icons/fa";
 
 export default function Navbar() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -43,6 +43,11 @@ export default function Navbar() {
       name: "Projects", 
       section: "projects", 
       icon: <BsCodeSlash className="text-xl" /> 
+    },
+    {
+      name: "Contact",
+      section: "contact",
+      icon: <FaEnvelope className="text-xl" />
     }
   ];
 
@@ -122,7 +127,7 @@ export default function Navbar() {
                         </motion.div>
                       )}
                     </motion.span>
-                    
+
                     {(hoveredIndex === index || activeIndex === index) && !openDropdown && (
                       <motion.div
                         className="absolute bottom-0 left-0 w-full h-[2px]"
