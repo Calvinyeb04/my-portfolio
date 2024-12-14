@@ -1,15 +1,12 @@
 "use client";
 
+import { motion, useScroll, useTransform } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { motion } from 'framer-motion';
-import { FaCode, FaLaptopCode, FaRobot, FaGraduationCap, FaUsers, FaDatabase, FaServer, FaMobile, FaAws, FaJava, FaCertificate, FaClock, FaProjectDiagram, FaTools, FaLinkedin, FaGithub, FaEnvelope, FaStar, FaBrain, FaLightbulb, FaRocket, FaSyncAlt, FaCloud, FaTruck, FaCogs, FaHandshake, FaChurch, FaVideo, FaNetworkWired, FaChartLine } from 'react-icons/fa';
-import { SiJavascript, SiPython, SiReact, SiGit, SiCplusplus, SiMysql, SiMongodb, SiDocker, SiTailwindcss, SiTypescript, SiNodedotjs, SiFigma } from 'react-icons/si';
-import { BiCodeBlock } from 'react-icons/bi';
+import { useRef } from 'react';
 import { BsLightningChargeFill } from 'react-icons/bs';
+import { FaAws, FaBrain, FaChartLine, FaChurch, FaCloud, FaCode, FaCogs, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaMobile, FaNetworkWired, FaProjectDiagram, FaRocket, FaServer, FaSyncAlt, FaTruck, FaUsers, FaVideo } from 'react-icons/fa';
 import { IoIosSpeedometer } from 'react-icons/io';
-import { useScroll, useTransform } from 'framer-motion';
-import { useEffect, useRef } from 'react';
-import { BsCodeSlash } from 'react-icons/bs';
+import { SiCplusplus, SiDocker, SiFigma, SiGit, SiJavascript, SiMongodb, SiMysql, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript } from 'react-icons/si';
 
 const Spline = dynamic(() => import('@splinetool/react-spline'), {
   ssr: false,
@@ -408,11 +405,18 @@ export default function Home() {
           
         </div>
          {/* Projects section with Spline scene */}
-         <section id="projects" className="min-h-screen relative">
-              <Spline
-                scene="https://prod.spline.design/sdWNE6GJDtDlonUu/scene.splinecode" 
-              />
-            </section>
+         {/* Projects Section */}
+<section id="projects" className="min-h-screen relative">
+  <div className="absolute inset-0">
+    <Spline
+        scene="https://prod.spline.design/bkrOa4QKtd9kGFmk/scene.splinecode" 
+        />
+  </div>
+
+  
+</section>
+         
+         
       </section>
     </main>
   );
