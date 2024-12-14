@@ -260,8 +260,7 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              
-              <div className="grid md:grid-cols-2 gap-8">
+　　 　　　　　　<div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-8">
                   <div className="bg-white/30 p-6 rounded-xl">
                     <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
@@ -402,33 +401,18 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Projects Section */}
-            <motion.div 
-              id="projects" 
-              className="glass-card p-10 rounded-2xl shadow-xl"
-              {...fadeIn}
-            >
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-2 h-16 bg-gradient-to-b from-pink-500 to-purple-600"></div>
-                <div>
-                  <h2 className="text-4xl font-bold text-gray-800 flex items-center gap-3">
-                    <BsCodeSlash className="text-pink-500 text-5xl" />
-                    Projects
-                  </h2>
-                  <p className="text-xl text-gray-600 mt-2">
-                    Showcasing My Creative Work
-                  </p>
-                </div>
-              </div>
-
-              {/* Add your projects content here */}
-              <div className="grid md:grid-cols-2 gap-8">
-                {/* Project cards will go here */}
-              </div>
-            </motion.div>
+           
 
           </motion.div>
+
+          
         </div>
+         {/* Projects section with Spline scene */}
+         <section id="projects" className="min-h-screen relative">
+              <Spline
+                scene="https://prod.spline.design/sdWNE6GJDtDlonUu/scene.splinecode" 
+              />
+            </section>
       </section>
     </main>
   );
