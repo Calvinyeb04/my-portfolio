@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { BsLightningChargeFill } from 'react-icons/bs';
-import { FaArrowRight, FaAws, FaBitcoin, FaBrain, FaChartLine, FaCheckCircle, FaChurch, FaCloud, FaCode, FaCogs, FaEnvelope, FaFile, FaFilm, FaGithub, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaLinkedin, FaMobile, FaNetworkWired, FaProjectDiagram, FaRobot, FaRocket, FaServer, FaSyncAlt, FaTruck, FaTwitter, FaUsers, FaVideo, FaWallet } from 'react-icons/fa';
+import { FaArrowRight, FaAws, FaBitcoin, FaBrain, FaChartLine, FaCheckCircle, FaChurch, FaCloud, FaCode, FaCogs, FaEnvelope, FaFile, FaFilm, FaGithub, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaLinkedin, FaMobile, FaNetworkWired, FaProjectDiagram, FaRobot, FaRocket, FaServer, FaSyncAlt, FaTruck, FaUsers, FaVideo, FaWallet } from 'react-icons/fa';
 import { IoIosSpeedometer } from 'react-icons/io';
 import { SiCplusplus, SiDocker, SiFigma, SiGit, SiJavascript, SiMongodb, SiMysql, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript } from 'react-icons/si';
 
@@ -13,8 +13,8 @@ const LoadingScreen = dynamic(() => import('@/components/LoadingScreen'), {
   ssr: false
 });
 
-// Dynamically import Spline with loading fallback
-const Spline = dynamic(() => import('@splinetool/react-spline'), {
+// Dynamically import Spline component with loading fallback
+const SplineComponent = dynamic(() => import('@/components/SplineComponent'), {
   ssr: false,
   loading: () => <div className="h-screen bg-black" />
 });
@@ -22,7 +22,6 @@ const Spline = dynamic(() => import('@splinetool/react-spline'), {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [splineLoaded, setSplineLoaded] = useState(0);
-  const [assetsLoaded, setAssetsLoaded] = useState(false);
   
   // Simplified Spline load handler
   const handleSplineLoad = useCallback(() => {
@@ -52,10 +51,8 @@ export default function Home() {
           }),
           // Add more assets as needed
         ]);
-        setAssetsLoaded(true);
       } catch (error) {
         console.error('Asset preloading error:', error);
-        setAssetsLoaded(true); // Continue anyway
       }
     };
 
@@ -149,7 +146,7 @@ export default function Home() {
       <main className="relative overflow-x-hidden" ref={containerRef}>
         {/* First Spline scene */}
         <section id="home" className="h-screen relative">
-          <Spline
+          <SplineComponent
             scene="https://prod.spline.design/C7EGsyMouJ4K5BH9/scene.splinecode"
             onLoad={handleSplineLoad}
           />
@@ -220,7 +217,7 @@ export default function Home() {
         {/* About section with second Spline scene */}
         <section id="about" className="min-h-screen relative">
           <div className="absolute inset-0">
-            <Spline
+            <SplineComponent
               scene="https://prod.spline.design/Lq54kq3C9dU3aA0G/scene.splinecode"
               onLoad={handleSplineLoad}
             />
@@ -279,8 +276,8 @@ export default function Home() {
                       My journey in technology is driven by an insatiable curiosity and a commitment to excellence.
                     </p>
                     <p className="text-gray-800 text-lg leading-relaxed">
-                      Beyond coding, I'm passionate about creating solutions that make a real difference. 
-                      Whether it's developing intuitive user interfaces or architecting robust backend systems, 
+                      Beyond coding, I&apos;m passionate about creating solutions that make a real difference. 
+                      Whether it&apos;s developing intuitive user interfaces or architecting robust backend systems, 
                       I approach each challenge with enthusiasm and dedication.
                     </p>
                   </div>
@@ -331,7 +328,7 @@ export default function Home() {
                     </h2>
                     <p className="text-xl text-gray-600 mt-2 flex items-center gap-2">
                       <FaRocket className="text-orange-500" />
-                      Building Tomorrow's Solutions Today
+                      Building Tomorrow&apos;s Solutions Today
                     </p>
                   </div>
                 </div>
@@ -484,7 +481,7 @@ export default function Home() {
         {/* Projects Section */}
         <section id="projects" className="min-h-screen relative">
           <div className="absolute inset-0">
-            <Spline
+            <SplineComponent
               scene="https://prod.spline.design/bkrOa4QKtd9kGFmk/scene.splinecode"
               onLoad={handleSplineLoad}
             />
@@ -848,12 +845,14 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="min-h-screen relative">
-          <div className="absolute inset-0">
-            <Spline
-              scene="https://prod.spline.design/sgbgUAfCvLp6vhXa/scene.splinecode"
-              onLoad={handleSplineLoad}
-            />
+        <section id="contact" className="min-h-screen relative bg-[#EBBBB1] transform-gpu">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5"></div>
+          
+          {/* 3D Geometric Shapes */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-20 left-20 w-32 h-32 bg-white/10 rounded-2xl transform rotate-45 animate-float"></div>
+            <div className="absolute top-40 right-40 w-24 h-24 bg-white/10 rounded-full transform animate-float-delay"></div>
+            <div className="absolute bottom-20 left-1/3 w-40 h-40 bg-white/10 rounded-3xl transform -rotate-12 animate-float-slow"></div>
           </div>
 
           <div className="relative z-10 container mx-auto px-6 py-20">
@@ -862,11 +861,12 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <h2 className="text-6xl font-bold text-white mb-6 drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                Let's Connect
+              <h2 className="text-6xl font-bold text-gray-800 mb-6 drop-shadow-[0_2px_4px_rgba(255,255,255,0.3)]
+                transform hover:scale-105 transition-transform duration-300">
+                Let&apos;s Connect
               </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto mb-8"></div>
-              <p className="text-xl text-white max-w-2xl mx-auto leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+              <div className="w-32 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto mb-8 transform hover:scale-x-110 transition-transform"></div>
+              <p className="text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
                 Ready to collaborate or just want to say hi? Reach out through any of these platforms!
               </p>
             </motion.div>
@@ -888,122 +888,105 @@ export default function Home() {
                 {
                   icon: FaGithub,
                   label: "GitHub",
-                  link: "https://github.com/yourusername",
-                  color: "from-gray-900 to-black",
-                  shadowColor: "shadow-black/30"
+                  link: "https://github.com/Calvinyeb04",
+                  color: "from-gray-800 to-gray-900",
+                  shadowColor: "shadow-gray-800/30"
                 },
                 {
                   icon: FaLinkedin,
                   label: "LinkedIn",
-                  link: "https://linkedin.com/in/yourusername",
-                  color: "from-blue-600 to-blue-800",
+                  link: "https://www.linkedin.com/in/calyeb/",
+                  color: "from-blue-500 to-blue-700",
                   shadowColor: "shadow-blue-500/30"
                 },
                 {
                   icon: FaEnvelope,
                   label: "Email",
-                  link: "mailto:your.email@example.com",
-                  color: "from-purple-600 to-pink-600",
-                  shadowColor: "shadow-purple-500/30"
+                  link: "mailto:yeboahcalvin04@gmail.com",
+                  color: "from-red-500 to-red-700",
+                  shadowColor: "shadow-red-500/30"
                 },
                 {
-                  icon: FaTwitter,
-                  label: "Twitter",
-                  link: "https://twitter.com/yourusername",
-                  color: "from-sky-500 to-sky-700",
-                  shadowColor: "shadow-sky-500/30"
+                  icon: FaFile,
+                  label: "Resume",
+                  link: "/resume/CalvinYeboah.Resume.pdf",
+                  color: "from-emerald-500 to-emerald-700",
+                  shadowColor: "shadow-emerald-500/30"
                 }
-              ].map((social, index) => (
+              ].map((item, index) => (
                 <motion.a
                   key={index}
-                  href={social.link}
+                  href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex flex-col items-center"
+                  className={`block p-8 rounded-2xl bg-gradient-to-br ${item.color} 
+                    transform hover:-translate-y-2 hover:scale-105 transition-all duration-300
+                    shadow-lg ${item.shadowColor} hover:shadow-2xl
+                    border border-white/10 backdrop-blur-sm
+                    group`}
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     show: { opacity: 1, y: 0 }
                   }}
-                  whileHover={{ y: -5 }}
                 >
-                  <motion.div
-                    className={`w-24 h-24 bg-gradient-to-br ${social.color} rounded-2xl
-                      flex items-center justify-center shadow-xl ${social.shadowColor}
-                      backdrop-blur-sm border border-white/10 group-hover:border-white/20
-                      transition-all duration-300`}
-                    whileHover={{ 
-                      scale: 1.1,
-                      rotate: [0, -10, 10, 0],
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    <social.icon className="text-4xl text-white transform transition-transform
-                      duration-300 group-hover:scale-110" />
-                  </motion.div>
-                  <span className="mt-4 text-lg font-medium text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
-                    {social.label}
-                  </span>
+                  <div className="flex flex-col items-center">
+                    <item.icon className="text-5xl text-white mb-4 group-hover:scale-110 transition-transform" />
+                    <h3 className="text-lg font-semibold text-white">{item.label}</h3>
+                  </div>
                 </motion.a>
               ))}
             </motion.div>
 
-            {/* Additional Contact Info */}
+            {/* Contact Info */}
             <motion.div 
-              className="mt-20 text-center"
+              className="mt-16 text-center bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto
+                transform hover:scale-105 transition-transform duration-300
+                shadow-xl border border-white/20"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
             >
-              <div className="bg-black/30 backdrop-blur-md rounded-2xl p-8 max-w-2xl mx-auto
-                border border-white/10 shadow-2xl">
-                <h3 className="text-2xl font-bold text-white mb-4">Quick Links</h3>
-                <div className="flex flex-wrap justify-center gap-4">
-                  <motion.a
-                    href="/resume.pdf"
-                    className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600
-                      rounded-xl text-white font-medium flex items-center gap-2
-                      hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaFile className="text-lg" />
-                    Resume
-                  </motion.a>
-                  <motion.a
-                    href="#projects"
-                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600
-                      rounded-xl text-white font-medium flex items-center gap-2
-                      hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaRocket className="text-lg" />
-                    Projects
-                  </motion.a>
-                </div>
+              <div className="space-y-4">
+                <p className="text-gray-800 text-lg flex items-center justify-center gap-3">
+                  <span className="font-semibold flex items-center gap-2">
+                    <FaEnvelope className="text-purple-600" />
+                    Email:
+                  </span>
+                  <span className="hover:text-purple-700 transition-colors">yeboahcalvin04@gmail.com</span>
+                </p>
+                <p className="text-gray-800 text-lg flex items-center justify-center gap-3">
+                  <span className="font-semibold flex items-center gap-2">
+                    <FaEnvelope className="text-purple-600" />
+                    Phone:
+                  </span>
+                  <span className="hover:text-purple-700 transition-colors">(513) 368-5646</span>
+                </p>
               </div>
             </motion.div>
 
-            {/* Floating Animation Elements */}
-            <motion.div
-              className="absolute top-20 right-10 w-20 h-20 opacity-20"
-              animate={{
-                y: [0, 20, 0],
-                rotate: [0, 360],
-                scale: [1, 1.2, 1]
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+            {/* Resume Download Button */}
+            <motion.div 
+              className="mt-12 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
             >
-              <FaCode className="text-white w-full h-full" />
+              <a
+                href="/resume/CalvinYeboah.Resume.pdf"
+                download
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 
+                  text-white px-10 py-4 rounded-xl hover:opacity-90 transition-all duration-300
+                  shadow-lg shadow-purple-500/30 hover:shadow-xl hover:-translate-y-1
+                  transform hover:scale-105 backdrop-blur-sm border border-white/10"
+              >
+                <FaFile className="text-xl" />
+                <span className="text-lg font-semibold">Download Resume</span>
+              </a>
             </motion.div>
           </div>
+
+          {/* Add some decorative elements */}
+          <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/10 to-transparent"></div>
         </section>
       </main>
     </>
   );
 }
-// export default Home;'

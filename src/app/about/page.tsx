@@ -75,7 +75,7 @@ export default function CalvinPortfolio() {
               <span className="text-gradient-to-r from-pink-500 to-purple-500">About Me</span>
             </h2>
             <p className="text-white/90 leading-relaxed text-lg font-medium">
-              Hello! I'm Calvin Yeboah, a passionate and driven 2nd-year Computer Science major with a minor in Information Technology 
+              Hello! I&apos;m Calvin Yeboah, a passionate and driven 2nd-year Computer Science major with a minor in Information Technology 
               at the University of Cincinnati. I thrive on exploring the endless possibilities of technology.
             </p>
           </motion.section>

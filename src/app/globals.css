@@ -245,4 +245,33 @@ html {
   backface-visibility: hidden;
   perspective: 1000px;
 }
- 
+
+/* Floating animation keyframes for the 3D elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(45deg); }
+  50% { transform: translateY(-20px) rotate(45deg); }
+}
+
+@keyframes float-delay {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(-12deg); }
+  50% { transform: translateY(-25px) rotate(-12deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delay {
+  animation: float-delay 5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+  animation-delay: 2s;
+}
