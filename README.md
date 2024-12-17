@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Calvin Yeboah's Portfolio
+
+Welcome to my personal portfolio website! This modern, interactive portfolio showcases my projects, skills, and professional journey in software development.
+
+## Features
+
+- **Interactive 3D Elements**: Engaging user interface with dynamic animations
+- **Responsive Design**: Seamless experience across all devices
+- **Project Showcase**: Detailed presentations of my latest work
+- **Technical Arsenal**: Comprehensive display of my skills and technologies
+- **Professional Journey**: Timeline of my experience and achievements
+- **Contact Section**: Easy ways to connect and collaborate
+
+## Built With
+
+- **Framework**: Next.js 15.0.4
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Icons**: React Icons
+- **3D Effects**: Custom CSS animations
+- **Type Safety**: TypeScript
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Calvinyeb04/my-portfolio.git
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies**
+   ```bash
+   cd my-portfolio
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Open [http://localhost:3000](http://localhost:3000) in your browser**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contact
 
-## Learn More
+- **Email**: yeboahcalvin04@gmail.com
+- **Phone**: (513) 368-5646
+- **LinkedIn**: [linkedin.com/in/calyeb](https://www.linkedin.com/in/calyeb/)
+- **GitHub**: [github.com/Calvinyeb04](https://github.com/Calvinyeb04)
 
-To learn more about Next.js, take a look at the following resources:
+## Resume
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+You can download my resume directly from the portfolio website or view it [here](/resume/CalvinYeboah.Resume.pdf).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Live Demo
 
-## Deploy on Vercel
+Visit my portfolio at [your-portfolio-url.com](https://your-portfolio-url.com) (Update this once deployed)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is open source and available under the [MIT License](LICENSE).
