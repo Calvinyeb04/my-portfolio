@@ -1,19 +1,12 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { BsLightningChargeFill } from 'react-icons/bs';
-import { FaAws, FaBrain, FaChartLine, FaChurch, FaCloud, FaCode, FaCogs, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaMobile, FaNetworkWired, FaProjectDiagram, FaRocket, FaServer, FaSyncAlt, FaTruck, FaUsers, FaVideo, FaCheckCircle, FaGithub, FaDatabase, FaChartBar, FaFilm, FaRobot, FaEnvelope, FaLinkedin, FaPaperPlane, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaArrowRight, FaAws, FaBitcoin, FaBrain, FaChartLine, FaCheckCircle, FaChurch, FaCloud, FaCode, FaCogs, FaEnvelope, FaFile, FaFilm, FaGithub, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaLinkedin, FaMobile, FaNetworkWired, FaProjectDiagram, FaRobot, FaRocket, FaServer, FaSyncAlt, FaTruck, FaTwitter, FaUsers, FaVideo, FaWallet } from 'react-icons/fa';
 import { IoIosSpeedometer } from 'react-icons/io';
 import { SiCplusplus, SiDocker, SiFigma, SiGit, SiJavascript, SiMongodb, SiMysql, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript } from 'react-icons/si';
-import { 
-  FaBitcoin, 
-  FaStar, 
-  FaFile, 
-  FaWallet, 
-  FaArrowRight 
-} from 'react-icons/fa';
 
 // Dynamically import LoadingScreen
 const LoadingScreen = dynamic(() => import('@/components/LoadingScreen'), {
@@ -1013,3 +1006,4 @@ export default function Home() {
     </>
   );
 }
+// export default Home;'
