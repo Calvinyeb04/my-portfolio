@@ -23,19 +23,23 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [splineLoaded, setSplineLoaded] = useState(0);
   
+  // Add timeout to prevent infinite loading
+  useEffect(() => {
+    const loadingTimeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 10000); // Force exit loading after 10 seconds
+
+    return () => clearTimeout(loadingTimeout);
+  }, []);
+
   // Simplified Spline load handler
   const handleSplineLoad = useCallback(() => {
     setSplineLoaded(prev => prev + 1);
+    // If at least one Spline loads, we can show the content
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   }, []);
-
-  // Simplified loading check
-  useEffect(() => {
-    if (splineLoaded >= 4) { // We have 4 Spline scenes
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    }
-  }, [splineLoaded]);
 
   // Preload essential assets
   useEffect(() => {
