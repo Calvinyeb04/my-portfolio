@@ -4,14 +4,11 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { BsLightningChargeFill } from 'react-icons/bs';
-import { FaArrowRight, FaAws, FaBitcoin, FaBrain, FaChartLine, FaCheckCircle, FaChurch, FaCloud, FaCode, FaCogs, FaEnvelope, FaFile, FaFilm, FaGithub, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaLinkedin, FaMobile, FaNetworkWired, FaProjectDiagram, FaRobot, FaRocket, FaServer, FaSyncAlt, FaTruck, FaUsers, FaVideo, FaWallet } from 'react-icons/fa';
+import { FaArrowRight, FaAws, FaBitcoin, FaBrain, FaBriefcase, FaCertificate, FaChartLine, FaCheckCircle, FaChurch, FaCloud, FaCode, FaCogs, FaDatabase, FaDocker, FaEnvelope, FaFile, FaFilm, FaGithub, FaGoogle, FaGraduationCap, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaLinkedin, FaMicrosoft, FaMobile, FaMobileAlt, FaNetworkWired, FaPhone, FaProjectDiagram, FaRobot, FaRocket, FaServer, FaSyncAlt, FaTools, FaTrophy, FaTruck, FaVideo, FaWallet, FaSearch, FaUsers } from 'react-icons/fa';
 import { IoIosSpeedometer } from 'react-icons/io';
-import { SiCplusplus, SiDocker, SiFigma, SiGit, SiJavascript, SiMongodb, SiMysql, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript } from 'react-icons/si';
+import { SiCplusplus, SiDocker, SiFigma, SiGit, SiJavascript, SiMongodb, SiMysql, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript, SiNextdotjs } from 'react-icons/si';
 
-// Dynamically import LoadingScreen
-const LoadingScreen = dynamic(() => import('../components/LoadingScreen'), {
-  ssr: false
-});
+
 
 // Dynamically import Spline component with loading fallback
 const SplineComponent = dynamic(() => import('@/components/SplineComponent'), {
@@ -19,23 +16,27 @@ const SplineComponent = dynamic(() => import('@/components/SplineComponent'), {
   loading: () => <div className="h-screen bg-black" />
 });
 
+// Add these hover effect utilities at the top of the file
+const projectHoverEffect = {
+  rest: { scale: 1, transition: { duration: 0.2 } },
+  hover: { scale: 1.02, transition: { duration: 0.2 } }
+};
+
+const buttonHoverEffect = {
+  rest: { scale: 1, opacity: 0.9 },
+  hover: { scale: 1.05, opacity: 1 }
+};
+
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
   const [splineLoaded, setSplineLoaded] = useState(0);
+  const [showAllProjects, setShowAllProjects] = useState(false);
+  const [filter, setFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
   
   // Simplified Spline load handler
   const handleSplineLoad = useCallback(() => {
     setSplineLoaded(prev => prev + 1);
   }, []);
-
-  // Simplified loading check
-  useEffect(() => {
-    if (splineLoaded >= 4) { // We have 4 Spline scenes
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    }
-  }, [splineLoaded]);
 
   // Preload essential assets
   useEffect(() => {
@@ -137,12 +138,43 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.1], [1, 0.8]);
 
+  // Update the additionalProjects array
+  const additionalProjects = [
+    {
+      title: "ASTRO Fitness",
+      description: "A comprehensive fitness application empowering users on their wellness journey.",
+      icon: FaRocket,
+      iconBg: "text-teal-400",
+      gradient: "from-green-900 to-teal-900",
+      tags: ["React Native", "Node.js", "MongoDB"],
+      features: [
+        "Custom workout plans with AI-driven recommendations",
+        "Comprehensive nutrition tracking and meal planning",
+        "Community features and progress sharing"
+      ],
+      github: "https://github.com/Calvinyeb04/astro-fitness",
+      demo: "https://astro-fitness-demo.vercel.app"
+    },
+    {
+      title: "Data Analytics Dashboard",
+      description: "Business intelligence platform providing real-time insights and predictive analytics.",
+      icon: FaChartLine,
+      iconBg: "text-green-400",
+      gradient: "from-blue-900 to-indigo-900",
+      tags: ["Python", "D3.js", "PostgreSQL", "Machine Learning"],
+      features: [
+        "Real-time data processing and visualization",
+        "Advanced analytics and reporting",
+        "Customizable dashboards and metrics"
+      ],
+      github: "https://github.com/Calvinyeb04/data-analytics",
+      demo: "https://data-analytics-demo.vercel.app"
+    }
+  ];
+
   return (
     <>
-      <AnimatePresence>
-        {isLoading && <LoadingScreen />}
-      </AnimatePresence>
-      
+
       <main className="relative overflow-x-hidden" ref={containerRef}>
         {/* First Spline scene */}
         <section id="home" className="h-screen relative">
@@ -214,14 +246,8 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* About section with second Spline scene */}
-        <section id="about" className="min-h-screen relative">
-          <div className="absolute inset-0">
-            <SplineComponent
-              scene="https://prod.spline.design/Lq54kq3C9dU3aA0G/scene.splinecode"
-              onLoad={handleSplineLoad}
-            />
-          </div>
+        {/* About section */}
+        <section id="about" className="min-h-screen relative bg-[#EBBBB1] py-20">
 
           {/* Content Overlay */}
           <div className="relative z-10 container mx-auto px-6 py-20">
@@ -264,54 +290,99 @@ export default function Home() {
                     </h2>
                     <p className="text-xl text-gray-600 mt-2 flex items-center gap-2">
                       <FaLightbulb className="text-yellow-500" />
-                      Transforming Ideas into Digital Reality
+                      Calvin Yeboah | Software Engineer
                     </p>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-6">
                     <p className="text-gray-800 text-lg leading-relaxed">
-                      As a dynamic 2nd-year Computer Science major at the University of Cincinnati, 
-                      I bring a unique blend of technical expertise and creative problem-solving to every project. 
-                      My journey in technology is driven by an insatiable curiosity and a commitment to excellence.
+                      Driven Information Technology student at the University of Cincinnati, blending robust software engineering principles from a Computer Science minor with practical experience in full-stack development. Proficient in Java Spring Boot, ASP.NET Core, and C#, with a proven track record of architecting and implementing scalable microservices, RESTful APIs, and enterprise-level solutions.
                     </p>
                     <p className="text-gray-800 text-lg leading-relaxed">
-                      Beyond coding, I&apos;m passionate about creating solutions that make a real difference. 
-                      Whether it&apos;s developing intuitive user interfaces or architecting robust backend systems, 
-                      I approach each challenge with enthusiasm and dedication.
+                      Possessing advanced database management skills, including extensive SQL expertise, MongoDB proficiency, and experience handling large datasets within Microsoft SQL Server Management Studio. Combining technical prowess with project management acumen, utilizing tools like ProjectLibre, I am eager to contribute to innovative projects in a dynamic software engineering or IT environment.
                     </p>
+                    <div className="bg-white/30 p-6 rounded-xl mt-6">
+                      <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                        <FaEnvelope className="text-purple-600" />
+                        Contact Information
+                      </h3>
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaEnvelope className="text-blue-500 mt-1" /> 
+                          <span>yeboahcalvin04@gmail.com</span>
+                        </li>
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaMobile className="text-green-500 mt-1" /> 
+                          <span>(513) 368-5646</span>
+                        </li>
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaLinkedin className="text-blue-600 mt-1" /> 
+                          <a href="https://www.linkedin.com/in/calyeb/" className="hover:text-blue-600 transition-colors">linkedin.com/in/calyeb</a>
+                        </li>
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaGithub className="text-gray-800 mt-1" /> 
+                          <a href="https://github.com/Calvinyeb04" className="hover:text-blue-600 transition-colors">github.com/Calvinyeb04</a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                   <div className="space-y-6">
                     <div className="bg-white/30 p-6 rounded-xl">
                       <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                        <FaRocket className="text-blue-500" />
-                        Core Values
+                        <FaCode className="text-blue-500" />
+                        Technical Expertise
                       </h3>
                       <ul className="space-y-3">
-                        <li className="flex items-center gap-3 text-gray-700">
-                          <FaLightbulb className="text-yellow-500 text-xl" /> 
-                          Innovation-Driven Development
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaCode className="text-yellow-500 mt-1" /> 
+                          <span><strong>Languages:</strong> Java, C#, Python, JavaScript, C++, TypeScript, SQL, Bash</span>
                         </li>
-                        <li className="flex items-center gap-3 text-gray-700">
-                          <FaSyncAlt className="text-green-500 text-xl" /> 
-                          Continuous Learning
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaServer className="text-green-500 mt-1" /> 
+                          <span><strong>Frameworks:</strong> Spring Boot, ASP.NET Core, React, Node.js, Express.js</span>
                         </li>
-                        <li className="flex items-center gap-3 text-gray-700">
-                          <FaUsers className="text-blue-500 text-xl" /> 
-                          Collaborative Problem-Solving
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <SiMongodb className="text-green-600 mt-1" /> 
+                          <span><strong>Databases:</strong> SQL Server, MongoDB, MySQL, PostgreSQL, Redis</span>
+                        </li>
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaCloud className="text-blue-500 mt-1" /> 
+                          <span><strong>Cloud & DevOps:</strong> AWS, Azure, Google Cloud, Docker, Git, CI/CD</span>
                         </li>
                       </ul>
                     </div>
                     <div className="bg-white/30 p-6 rounded-xl">
                       <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                        <FaCloud className="text-cyan-500" />
-                        Current Focus
+                        <FaGraduationCap className="text-purple-600" />
+                        Education
                       </h3>
-                      <p className="text-gray-700 flex items-center gap-2">
-                        <BsLightningChargeFill className="text-yellow-500" />
-                        Exploring cutting-edge web technologies and cloud computing solutions while
-                        maintaining a strong foundation in computer science fundamentals.
-                      </p>
+                      <div className="space-y-2">
+                        <p className="text-gray-800 font-medium">University of Cincinnati</p>
+                        <p className="text-gray-700">Bachelor of Science in Information Technology</p>
+                        <p className="text-gray-700">Minor in Computer Science</p>
+                        <p className="text-gray-700">GPA: 3.8 | Aug 2022 - May 2027</p>
+                      </div>
+                    </div>
+                    <div className="bg-white/30 p-6 rounded-xl">
+                      <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                        <FaCertificate className="text-yellow-500" />
+                        Certifications
+                      </h3>
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaMicrosoft className="text-blue-500 mt-1" /> 
+                          <span>Microsoft Certified: Azure DevOps (Dec 2024)</span>
+                        </li>
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaNetworkWired className="text-blue-600 mt-1" /> 
+                          <span>Cisco Networking (Nov 2024)</span>
+                        </li>
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaGoogle className="text-red-500 mt-1" /> 
+                          <span>Google Analytics Individual Qualification (Jun 2024)</span>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -328,7 +399,7 @@ export default function Home() {
                     </h2>
                     <p className="text-xl text-gray-600 mt-2 flex items-center gap-2">
                       <FaRocket className="text-orange-500" />
-                      Building Tomorrow&apos;s Solutions Today
+                      Building Experience & Developing Solutions
                     </p>
                   </div>
                 </div>
@@ -336,44 +407,44 @@ export default function Home() {
                   <div className="space-y-8">
                     <div className="bg-white/30 p-6 rounded-xl">
                       <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-                        <FaTruck className="text-blue-600" />
-                        Software Developer Intern @ TQL
+                        <FaLaptopCode className="text-blue-600" />
+                        Full Stack Intern @ TechElevate
                       </h3>
-                      <p className="text-gray-600 mb-4">Fall 2024</p>
+                      <p className="text-gray-600 mb-4">August 2024 - December 2024</p>
                       <ul className="space-y-3">
                         <li className="flex items-start gap-3 text-gray-700">
-                          <FaCogs className="text-purple-500 mt-1" />
-                          Developing innovative logistics solutions using cutting-edge technologies
+                          <FaCode className="text-purple-500 mt-1" />
+                          Contributed to scalable web applications using React, Python, and MongoDB, focusing on performance optimization
                         </li>
                         <li className="flex items-start gap-3 text-gray-700">
-                          <IoIosSpeedometer className="text-green-500 mt-1" />
-                          Implementing scalable features that enhance operational efficiency
+                          <FaDocker className="text-blue-500 mt-1" />
+                          Gained experience with CI/CD pipelines, utilizing Docker and AWS to automate deployments
                         </li>
                         <li className="flex items-start gap-3 text-gray-700">
-                          <FaHandshake className="text-blue-500 mt-1" />
-                          Collaborating with cross-functional teams to deliver robust solutions
+                          <FaUsers className="text-green-500 mt-1" />
+                          Actively participated in Agile Scrum ceremonies, contributing to sprint planning and daily stand-ups
                         </li>
                       </ul>
                     </div>
 
                     <div className="bg-white/30 p-6 rounded-xl">
                       <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-                        <FaLaptopCode className="text-cyan-600" />
-                        Full-Stack Developer @ TechElevate
+                        <FaChurch className="text-purple-600" />
+                        IT Technician @ Ghana SDA Church
                       </h3>
-                      <p className="text-gray-600 mb-4">Summer 2024 – Present</p>
+                      <p className="text-gray-600 mb-4">July 2023 - June 2024</p>
                       <ul className="space-y-3">
                         <li className="flex items-start gap-3 text-gray-700">
-                          <FaMobile className="text-purple-500 mt-1" />
-                          Leading development of responsive web applications
+                          <FaTools className="text-red-500 mt-1" />
+                          Provided comprehensive IT support for live events, resolving technical issues promptly
                         </li>
                         <li className="flex items-start gap-3 text-gray-700">
-                          <FaServer className="text-green-500 mt-1" />
-                          Implementing modern frontend frameworks and backend solutions
+                          <FaCogs className="text-blue-500 mt-1" />
+                          Performed system maintenance and upgrades, ensuring optimal performance and minimizing downtime
                         </li>
                         <li className="flex items-start gap-3 text-gray-700">
-                          <IoIosSpeedometer className="text-orange-500 mt-1" />
-                          Optimizing application performance and user experience
+                          <FaUsers className="text-green-500 mt-1" />
+                          Trained end-users on software and hardware, enhancing their productivity and technical proficiency
                         </li>
                       </ul>
                     </div>
@@ -382,40 +453,63 @@ export default function Home() {
                   <div className="space-y-8">
                     <div className="bg-white/30 p-6 rounded-xl">
                       <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
-                        <FaChurch className="text-purple-600" />
-                        IT Specialist @ Ghana SDA Church
+                        <FaCode className="text-cyan-600" />
+                        Freelance Developer @ Fiverr
                       </h3>
-                      <p className="text-gray-600 mb-4">2023 – Present</p>
+                      <p className="text-gray-600 mb-4">January 2022 - Present</p>
                       <ul className="space-y-3">
                         <li className="flex items-start gap-3 text-gray-700">
-                          <FaVideo className="text-red-500 mt-1" />
-                          Revolutionized digital worship experience through modern streaming solutions
+                          <FaLaptopCode className="text-purple-500 mt-1" />
+                          <span>Delivered 50+ custom web applications and solutions for diverse international clients</span>
                         </li>
                         <li className="flex items-start gap-3 text-gray-700">
-                          <FaNetworkWired className="text-blue-500 mt-1" />
-                          Led technical team in implementing and maintaining AV systems
+                          <FaServer className="text-green-500 mt-1" />
+                          <span>Specialized in React, Node.js, and MongoDB stack with 4.9/5 average rating</span>
                         </li>
                         <li className="flex items-start gap-3 text-gray-700">
-                          <FaCloud className="text-cyan-500 mt-1" />
-                          Developed digital solutions for remote community engagement
+                          <FaProjectDiagram className="text-orange-500 mt-1" />
+                          <span>Maintained 95% client satisfaction rate with efficient project delivery and communication</span>
                         </li>
                       </ul>
                     </div>
 
-                    <div className="bg-white/40 p-6 rounded-xl">
+                    <div className="bg-white/30 p-6 rounded-xl">
+                      <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                        <FaUsers className="text-green-600" />
+                        Teaching Assistant/Mentor @ Ready2Earn
+                      </h3>
+                      <p className="text-gray-600 mb-4">June 2023 - August 2023</p>
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaLaptopCode className="text-blue-500 mt-1" />
+                          Led the Web Development Team, providing instruction on HTML, JavaScript, and Node.js
+                        </li>
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaUsers className="text-purple-500 mt-1" />
+                          Oversaw development team projects, managed task allocation, and ensured successful delivery
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-white/30 p-6 rounded-xl mt-4">
                       <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                        <FaChartLine className="text-green-500" />
-                        Key Achievements
+                        <FaBriefcase className="text-gray-700" />
+                        Previous Roles
                       </h3>
                       <ul className="space-y-3">
-                        <li className="flex items-center gap-3 text-gray-700">
-                          <FaProjectDiagram className="text-purple-500" /> Led 3 major technical projects
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaTruck className="text-orange-500 mt-1" /> 
+                          <div>
+                            <span className="font-medium">Fulfillment Associate @ The Home Depot</span>
+                            <p className="text-sm text-gray-600">Feb 2022 - Aug 2022</p>
+                          </div>
                         </li>
-                        <li className="flex items-center gap-3 text-gray-700">
-                          <IoIosSpeedometer className="text-blue-500" /> Improved system efficiency by 40%
-                        </li>
-                        <li className="flex items-center gap-3 text-gray-700">
-                          <FaProjectDiagram className="text-purple-500" /> Mentored 5 junior developers
+                        <li className="flex items-start gap-3 text-gray-700">
+                          <FaHandshake className="text-blue-500 mt-1" /> 
+                          <div>
+                            <span className="font-medium">Customer Service Associate @ Amazon</span>
+                            <p className="text-sm text-gray-600">Feb 2021 - Jan 2022</p>
+                          </div>
                         </li>
                       </ul>
                     </div>
@@ -478,290 +572,385 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Projects Section */}
-        <section id="projects" className="min-h-screen relative">
-          <div className="absolute inset-0">
-            <SplineComponent
-              scene="https://prod.spline.design/bkrOa4QKtd9kGFmk/scene.splinecode"
-              onLoad={handleSplineLoad}
-            />
+        {/* Projects Section - Modified */}
+        <section id="projects" className="min-h-screen relative bg-[#EBBBB1]">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-20 left-20 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-40 right-40 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
           </div>
 
           <div className="relative z-10 container mx-auto px-6 py-20">
-            {/* Projects Section Header */}
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">Featured Projects</h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <h1 className="text-5xl font-bold text-gray-800 mb-4">
+                Crafting Digital Solutions
+              </h1>
+              <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto mb-6"></div>
+              <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+                Transforming Ideas into Innovative Applications
+              </p>
+            </motion.div>
+
+            <div className="flex justify-center gap-4 mb-8">
+              {['all', 'web', 'mobile', 'data'].map((category) => (
+                <motion.button
+                  key={category}
+                  onClick={() => setFilter(category)}
+                  className={`px-6 py-2 rounded-full text-sm font-medium 
+                    transition-all duration-300 ${
+                    filter === category 
+                      ? 'bg-purple-600 text-white' 
+                      : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                </motion.button>
+              ))}
             </div>
 
-            <motion.div className="grid md:grid-cols-2 gap-8">
-              {/* AstroFlow Card */}
-              <motion.div 
-                className="bg-black/80 rounded-2xl overflow-hidden
-                  border-2 border-white/20 shadow-2xl hover:border-purple-500/50
-                  transform-gpu transition-all duration-300 hover:scale-[1.02]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="relative h-48 bg-gradient-to-br from-blue-900 to-purple-900 p-6">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="text-3xl font-bold text-white mb-2">AstroFlow</h3>
-                      <p className="text-purple-300 font-medium text-lg">
-                        AI-Driven Document Collaboration
-                      </p>
-                    </div>
-                    <div className="bg-black/30 p-3 rounded-xl">
-                      <FaBrain className="text-5xl text-purple-400" />
-                    </div>
-                  </div>
-                  
-                  <div className="absolute bottom-4 left-6 right-6 flex justify-between">
-                    <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
-                      <FaUsers className="text-purple-400" />
-                      <span className="text-white font-medium">5k+ Users</span>
-                    </div>
-                    <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
-                      <FaCloud className="text-blue-400" />
-                      <span className="text-white font-medium">Enterprise</span>
-                    </div>
-                  </div>
-                </div>
+            <div className="relative max-w-md mx-auto mb-8">
+              <input
+                type="text"
+                placeholder="Search projects..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2 bg-white/10 rounded-lg
+                  border border-white/20 text-white placeholder-gray-400
+                  focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <FaSearch className="absolute right-4 top-1/2 transform 
+                -translate-y-1/2 text-gray-400" />
+            </div>
 
-                <div className="p-6 space-y-6">
-                  <p className="text-gray-300 text-lg leading-relaxed">
-                    Transform teamwork with innovative document collaboration. Combining real-time editing 
-                    with AI-powered features for enhanced productivity.
-                  </p>
-
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3">
-                      <FaCheckCircle className="text-purple-400 mt-1.5 flex-shrink-0 text-lg" />
-                      <span className="text-gray-200">Real-time collaboration with AI assistance</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <FaCheckCircle className="text-purple-400 mt-1.5 flex-shrink-0 text-lg" />
-                      <span className="text-gray-200">Version control & secure cloud storage</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <FaCheckCircle className="text-purple-400 mt-1.5 flex-shrink-0 text-lg" />
-                      <span className="text-gray-200">Cross-platform accessibility</span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      React
-                    </span>
-                    <span className="bg-green-900/80 text-green-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      Node.js
-                    </span>
-                    <span className="bg-purple-900/80 text-purple-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      TensorFlow
-                    </span>
-                    <span className="bg-orange-900/80 text-orange-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      AWS
-                    </span>
-                  </div>
-
-                  <div className="flex gap-4 pt-2">
-                    <button className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 
-                      text-white py-3 rounded-xl hover:opacity-90 transition-opacity 
-                      flex items-center justify-center gap-2 font-medium text-lg">
-                      <span>View Project</span>
-                      <FaArrowRight />
-                    </button>
-                    <a href="https://github.com/yourusername/astroflow" 
-                      className="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-colors"
-                      target="_blank"
-                      rel="noopener noreferrer">
-                      <FaGithub className="text-2xl text-white" />
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* ASTRO Fitness Card */}
+            <div className="grid lg:grid-cols-2 gap-10">
+              {/* AstroFlow */}
               <motion.div 
                 className="bg-black/80 rounded-2xl overflow-hidden
                   border-2 border-white/20 shadow-2xl hover:border-green-500/50
-                  transform-gpu transition-all duration-300 hover:scale-[1.02]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -5 }}
+                  transform-gpu transition-all duration-300"
+                variants={projectHoverEffect}
+                initial="rest"
+                whileHover="hover"
               >
-                <div className="relative h-48 bg-gradient-to-br from-green-900 to-teal-900 p-6">
+                <div className="relative h-48 bg-gradient-to-br from-green-900 to-teal-700 p-6">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="text-3xl font-bold text-white mb-2">ASTRO Fitness</h3>
-                      <p className="text-teal-300 font-medium text-lg">
-                        Redefining Wellness Through Technology
+                      <h3 className="text-3xl font-bold text-white mb-2">ASTRO-CRYPTO</h3>
+                      <p className="text-green-200 font-medium text-lg">
+                        Cryptocurrency Tracking Platform
                       </p>
                     </div>
                     <div className="bg-black/30 p-3 rounded-xl">
-                      <FaRocket className="text-5xl text-teal-400" />
+                      <FaBitcoin className="text-5xl text-green-400" />
                     </div>
                   </div>
                   
                   <div className="absolute bottom-4 left-6 right-6 flex justify-between">
                     <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
-                      <FaMobile className="text-teal-400" />
-                      <span className="text-white font-medium">Mobile App</span>
+                      <FaChartLine className="text-green-400" />
+                      <span className="text-white font-medium">Real-Time Data</span>
                     </div>
                     <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
-                      <FaUsers className="text-green-400" />
-                      <span className="text-white font-medium">10k+ Users</span>
+                      <FaWallet className="text-teal-400" />
+                      <span className="text-white font-medium">Portfolio Management</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-6 space-y-6">
                   <p className="text-gray-300 text-lg leading-relaxed">
-                    A comprehensive fitness application crafted to empower users on their wellness journey, 
-                    integrating fitness, nutrition, and sustainability.
+                    A comprehensive cryptocurrency tracking platform with real-time data, advanced trading tools, 
+                    and portfolio management features for crypto enthusiasts and investors.
                   </p>
 
                   <div className="space-y-3">
                     <div className="flex items-start gap-3">
                       <FaCheckCircle className="text-green-400 mt-1.5 flex-shrink-0 text-lg" />
-                      <span className="text-gray-200">Custom workout plans with AI-driven recommendations</span>
+                      <span className="text-gray-200">Real-time cryptocurrency price tracking and alerts</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <FaCheckCircle className="text-green-400 mt-1.5 flex-shrink-0 text-lg" />
-                      <span className="text-gray-200">Comprehensive nutrition tracking and meal planning</span>
+                      <span className="text-gray-200">Portfolio management with performance analytics</span>
                     </div>
                     <div className="flex items-start gap-3">
                       <FaCheckCircle className="text-green-400 mt-1.5 flex-shrink-0 text-lg" />
-                      <span className="text-gray-200">Community features and progress sharing</span>
+                      <span className="text-gray-200">Advanced trading tools with historical data analysis</span>
                     </div>
                   </div>
 
                   <div className="flex flex-wrap gap-2">
                     <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      React Native
+                      React.js
                     </span>
-                    <span className="bg-green-900/80 text-green-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      Node.js
+                    <span className="bg-yellow-900/80 text-yellow-200 px-4 py-1.5 rounded-full text-sm font-medium">
+                      JavaScript
                     </span>
-                    <span className="bg-cyan-900/80 text-cyan-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      MongoDB
+                    <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+                      ASP.NET Web API
                     </span>
                   </div>
 
                   <div className="flex gap-4 pt-2">
-                    <button className="flex-1 bg-gradient-to-r from-green-600 to-teal-600 
-                      text-white py-3 rounded-xl hover:opacity-90 transition-opacity 
-                      flex items-center justify-center gap-2 font-medium text-lg">
-                      <span>View Project</span>
-                      <FaArrowRight />
-                    </button>
-                    <a href="https://github.com/yourusername/astro-fitness" 
-                      className="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-colors"
+                    <motion.a
+                      href="https://github.com/Calvinyeb04/astro-crypto"
                       target="_blank"
-                      rel="noopener noreferrer">
-                      <FaGithub className="text-2xl text-white" />
-                    </a>
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-gradient-to-r from-green-600 to-teal-600 
+                        text-white py-3 rounded-xl
+                        flex items-center justify-center gap-2 font-medium text-lg
+                        relative overflow-hidden group"
+                      variants={buttonHoverEffect}
+                      initial="rest"
+                      whileHover="hover"
+                    >
+                      <div className="absolute inset-0 bg-white/10 transform translate-y-full 
+                        transition-transform group-hover:translate-y-0"></div>
+                      <span className="relative">View Project</span>
+                      <FaArrowRight className="relative text-xl transition-transform 
+                        group-hover:translate-x-1" />
+                    </motion.a>
+                    
+                    <motion.a
+                      href="https://github.com/Calvinyeb04/astro-crypto"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/10 p-3 rounded-xl group
+                        hover:bg-white/20 transition-all duration-300"
+                      variants={buttonHoverEffect}
+                      initial="rest"
+                      whileHover="hover"
+                    >
+                      <FaGithub className="text-2xl text-white transition-transform 
+                        group-hover:scale-110" />
+                    </motion.a>
                   </div>
                 </div>
               </motion.div>
 
-              {/* ASTRO Crypto Card */}
+              {/* Network Monitoring System */}
               <motion.div 
                 className="bg-black/80 rounded-2xl overflow-hidden
-                  border-2 border-white/20 shadow-2xl hover:border-orange-500/50
-                  transform-gpu transition-all duration-300 hover:scale-[1.02]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -5 }}
+                  border-2 border-white/20 shadow-2xl hover:border-purple-500/50
+                  transform-gpu transition-all duration-300"
+                variants={projectHoverEffect}
+                initial="rest"
+                whileHover="hover"
               >
-                <div className="relative h-48 bg-gradient-to-br from-orange-900 to-yellow-900 p-6">
+                <div className="relative h-48 bg-gradient-to-br from-purple-900 to-indigo-700 p-6">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="text-3xl font-bold text-white mb-2">ASTRO Crypto</h3>
-                      <p className="text-yellow-300 font-medium text-lg">
-                        Empowering Cryptocurrency Enthusiasts
+                      <h3 className="text-3xl font-bold text-white mb-2">Network Monitoring System</h3>
+                      <p className="text-purple-200 font-medium text-lg">
+                        Automated Incident Management
                       </p>
                     </div>
                     <div className="bg-black/30 p-3 rounded-xl">
-                      <FaBitcoin className="text-5xl text-yellow-400" />
+                      <FaNetworkWired className="text-5xl text-purple-400" />
                     </div>
                   </div>
                   
                   <div className="absolute bottom-4 left-6 right-6 flex justify-between">
                     <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
-                      <FaWallet className="text-orange-400" />
-                      <span className="text-white font-medium">Crypto Platform</span>
+                      <FaSyncAlt className="text-purple-400" />
+                      <span className="text-white font-medium">Real-Time</span>
                     </div>
                     <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
-                      <FaChartLine className="text-yellow-400" />
-                      <span className="text-white font-medium">Real-time Data</span>
+                      <FaTools className="text-indigo-400" />
+                      <span className="text-white font-medium">Automation</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Complete the ASTRO Crypto Card content */}
                 <div className="p-6 space-y-6">
                   <p className="text-gray-300 text-lg leading-relaxed">
-                    A state-of-the-art platform for tracking cryptocurrency prices, analyzing market trends, 
-                    and managing portfolios with advanced tools for both novice and seasoned traders.
+                    An automated system that monitors network devices, detects issues such as network downtime or unauthorized access, 
+                    and triggers automated incident management actions.
                   </p>
 
                   <div className="space-y-3">
                     <div className="flex items-start gap-3">
-                      <FaCheckCircle className="text-orange-400 mt-1.5 flex-shrink-0 text-lg" />
-                      <span className="text-gray-200">Real-time tracking of top cryptocurrencies</span>
+                      <FaCheckCircle className="text-purple-400 mt-1.5 flex-shrink-0 text-lg" />
+                      <span className="text-gray-200">Python backend for network monitoring and automation</span>
                     </div>
                     <div className="flex items-start gap-3">
-                      <FaCheckCircle className="text-orange-400 mt-1.5 flex-shrink-0 text-lg" />
-                      <span className="text-gray-200">Customizable alerts for price changes and trends</span>
+                      <FaCheckCircle className="text-purple-400 mt-1.5 flex-shrink-0 text-lg" />
+                      <span className="text-gray-200">React dashboard for real-time monitoring and alerts</span>
                     </div>
                     <div className="flex items-start gap-3">
-                      <FaCheckCircle className="text-orange-400 mt-1.5 flex-shrink-0 text-lg" />
-                      <span className="text-gray-200">Professional-grade charts and technical analysis</span>
+                      <FaCheckCircle className="text-purple-400 mt-1.5 flex-shrink-0 text-lg" />
+                      <span className="text-gray-200">Integrated database for logging and historical analysis</span>
                     </div>
                   </div>
 
                   <div className="flex flex-wrap gap-2">
                     <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+                      Python
+                    </span>
+                    <span className="bg-purple-900/80 text-purple-200 px-4 py-1.5 rounded-full text-sm font-medium">
                       React
                     </span>
                     <span className="bg-green-900/80 text-green-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      Node.js
+                      MongoDB
                     </span>
-                    <span className="bg-yellow-900/80 text-yellow-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      Web3.js
-                    </span>
-                    <span className="bg-red-900/80 text-red-200 px-4 py-1.5 rounded-full text-sm font-medium">
-                      Redis
+                    <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+                      MySQL
                     </span>
                   </div>
 
                   <div className="flex gap-4 pt-2">
-                    <button className="flex-1 bg-gradient-to-r from-orange-600 to-yellow-600 
-                      text-white py-3 rounded-xl hover:opacity-90 transition-opacity 
-                      flex items-center justify-center gap-2 font-medium text-lg">
-                      <span>View Project</span>
-                      <FaArrowRight />
-                    </button>
-                    <a href="https://github.com/yourusername/astro-crypto" 
-                      className="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-colors"
+                    <motion.a
+                      href="https://github.com/Calvinyeb04/network-monitor"
                       target="_blank"
-                      rel="noopener noreferrer">
-                      <FaGithub className="text-2xl text-white" />
-                    </a>
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-gradient-to-r from-purple-600 to-indigo-600 
+                        text-white py-3 rounded-xl
+                        flex items-center justify-center gap-2 font-medium text-lg
+                        relative overflow-hidden group"
+                      variants={buttonHoverEffect}
+                      initial="rest"
+                      whileHover="hover"
+                    >
+                      <div className="absolute inset-0 bg-white/10 transform translate-y-full 
+                        transition-transform group-hover:translate-y-0"></div>
+                      <span className="relative">View Project</span>
+                      <FaArrowRight className="relative text-xl transition-transform 
+                        group-hover:translate-x-1" />
+                    </motion.a>
+                    
+                    <motion.a
+                      href="https://github.com/Calvinyeb04/network-monitor"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/10 p-3 rounded-xl group
+                        hover:bg-white/20 transition-all duration-300"
+                      variants={buttonHoverEffect}
+                      initial="rest"
+                      whileHover="hover"
+                    >
+                      <FaGithub className="text-2xl text-white transition-transform 
+                        group-hover:scale-110" />
+                    </motion.a>
                   </div>
                 </div>
               </motion.div>
 
-              {/* AstroFlicks Card */}
+              {/* ASTRO-CRYPTO */}
+              <motion.div 
+                className="bg-black/80 rounded-2xl overflow-hidden
+                  border-2 border-white/20 shadow-2xl hover:border-green-500/50
+                  transform-gpu transition-all duration-300"
+                variants={projectHoverEffect}
+                initial="rest"
+                whileHover="hover"
+              >
+                <div className="relative h-48 bg-gradient-to-br from-green-900 to-teal-700 p-6">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-3xl font-bold text-white mb-2">ASTRO-CRYPTO</h3>
+                      <p className="text-green-200 font-medium text-lg">
+                        Cryptocurrency Tracking Platform
+                      </p>
+                    </div>
+                    <div className="bg-black/30 p-3 rounded-xl">
+                      <FaBitcoin className="text-5xl text-green-400" />
+                    </div>
+                  </div>
+                  
+                  <div className="absolute bottom-4 left-6 right-6 flex justify-between">
+                    <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+                      <FaChartLine className="text-green-400" />
+                      <span className="text-white font-medium">Real-Time Data</span>
+                    </div>
+                    <div className="bg-black/50 px-4 py-1.5 rounded-full flex items-center gap-2">
+                      <FaWallet className="text-teal-400" />
+                      <span className="text-white font-medium">Portfolio Management</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 space-y-6">
+                  <p className="text-gray-300 text-lg leading-relaxed">
+                    A comprehensive cryptocurrency tracking platform with real-time data, advanced trading tools, 
+                    and portfolio management features for crypto enthusiasts and investors.
+                  </p>
+
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <FaCheckCircle className="text-green-400 mt-1.5 flex-shrink-0 text-lg" />
+                      <span className="text-gray-200">Real-time cryptocurrency price tracking and alerts</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <FaCheckCircle className="text-green-400 mt-1.5 flex-shrink-0 text-lg" />
+                      <span className="text-gray-200">Portfolio management with performance analytics</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <FaCheckCircle className="text-green-400 mt-1.5 flex-shrink-0 text-lg" />
+                      <span className="text-gray-200">Advanced trading tools with historical data analysis</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+                      React.js
+                    </span>
+                    <span className="bg-yellow-900/80 text-yellow-200 px-4 py-1.5 rounded-full text-sm font-medium">
+                      JavaScript
+                    </span>
+                    <span className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+                      ASP.NET Web API
+                    </span>
+                  </div>
+
+                  <div className="flex gap-4 pt-2">
+                    <motion.a
+                      href="https://github.com/Calvinyeb04/astro-crypto"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-gradient-to-r from-green-600 to-teal-600 
+                        text-white py-3 rounded-xl
+                        flex items-center justify-center gap-2 font-medium text-lg
+                        relative overflow-hidden group"
+                      variants={buttonHoverEffect}
+                      initial="rest"
+                      whileHover="hover"
+                    >
+                      <div className="absolute inset-0 bg-white/10 transform translate-y-full 
+                        transition-transform group-hover:translate-y-0"></div>
+                      <span className="relative">View Project</span>
+                      <FaArrowRight className="relative text-xl transition-transform 
+                        group-hover:translate-x-1" />
+                    </motion.a>
+                    
+                    <motion.a
+                      href="https://github.com/Calvinyeb04/astro-crypto"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/10 p-3 rounded-xl group
+                        hover:bg-white/20 transition-all duration-300"
+                      variants={buttonHoverEffect}
+                      initial="rest"
+                      whileHover="hover"
+                    >
+                      <FaGithub className="text-2xl text-white transition-transform 
+                        group-hover:scale-110" />
+                    </motion.a>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* AstroFlicks */}
               <motion.div 
                 className="bg-black/80 rounded-2xl overflow-hidden
                   border-2 border-white/20 shadow-2xl hover:border-red-500/50
-                  transform-gpu transition-all duration-300 hover:scale-[1.02]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -5 }}
+                  transform-gpu transition-all duration-300"
+                variants={projectHoverEffect}
+                initial="rest"
+                whileHover="hover"
               >
                 <div className="relative h-48 bg-gradient-to-br from-red-900 to-pink-900 p-6">
                   <div className="flex justify-between items-start">
@@ -825,21 +1014,163 @@ export default function Home() {
                   </div>
 
                   <div className="flex gap-4 pt-2">
-                    <button className="flex-1 bg-gradient-to-r from-red-600 to-pink-600 
-                      text-white py-3 rounded-xl hover:opacity-90 transition-opacity 
-                      flex items-center justify-center gap-2 font-medium text-lg">
-                      <span>Explore Project</span>
-                      <FaArrowRight />
-                    </button>
-                    <a href="https://github.com/yourusername/astroflicks" 
-                      className="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-colors"
+                    <motion.a
+                      href="https://github.com/Calvinyeb04/astroflicks"
                       target="_blank"
-                      rel="noopener noreferrer">
-                      <FaGithub className="text-2xl text-white" />
-                    </a>
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-gradient-to-r from-red-600 to-pink-600 
+                        text-white py-3 rounded-xl
+                        flex items-center justify-center gap-2 font-medium text-lg
+                        relative overflow-hidden group"
+                      variants={buttonHoverEffect}
+                      initial="rest"
+                      whileHover="hover"
+                    >
+                      <div className="absolute inset-0 bg-white/10 transform translate-y-full 
+                        transition-transform group-hover:translate-y-0"></div>
+                      <span className="relative">View Project</span>
+                      <FaArrowRight className="relative text-xl transition-transform 
+                        group-hover:translate-x-1" />
+                    </motion.a>
+                    
+                    <motion.a
+                      href="https://github.com/Calvinyeb04/astroflicks"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/10 p-3 rounded-xl group
+                        hover:bg-white/20 transition-all duration-300"
+                      variants={buttonHoverEffect}
+                      initial="rest"
+                      whileHover="hover"
+                    >
+                      <FaGithub className="text-2xl text-white transition-transform 
+                        group-hover:scale-110" />
+                    </motion.a>
                   </div>
                 </div>
               </motion.div>
+            </div>
+
+            {/* View More Projects Button */}
+            <motion.div 
+              className="mt-16 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              {showAllProjects && (
+                <motion.div 
+                  className="grid lg:grid-cols-2 gap-10 mb-16"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ staggerChildren: 0.1 }}
+                >
+                  {additionalProjects.map((project, index) => (
+                    <motion.div 
+                      key={index}
+                      className="bg-black/80 rounded-2xl overflow-hidden
+                        border-2 border-white/20 shadow-2xl hover:border-green-500/50
+                        transform-gpu transition-all duration-300"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      whileHover={{ y: -5 }}
+                    >
+                      <div className={`relative h-48 bg-gradient-to-br ${project.gradient} p-6`}>
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h3 className="text-3xl font-bold text-white mb-2">{project.title}</h3>
+                            <p className="text-gray-200 font-medium text-lg">
+                              {project.description}
+                            </p>
+                          </div>
+                          <div className="bg-black/30 p-3 rounded-xl">
+                            <project.icon className={`text-5xl ${project.iconBg}`} />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-6 space-y-6">
+                        <div className="space-y-3">
+                          {project.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-start gap-3">
+                              <FaCheckCircle className={`${project.iconBg} mt-1.5 flex-shrink-0 text-lg`} />
+                              <span className="text-gray-200">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag, idx) => (
+                            <span key={idx} className="bg-blue-900/80 text-blue-200 px-4 py-1.5 rounded-full text-sm font-medium">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="flex gap-4 pt-2">
+                          <motion.a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 bg-gradient-to-r from-green-600 to-teal-600 
+                              text-white py-3 rounded-xl
+                              flex items-center justify-center gap-2 font-medium text-lg
+                              relative overflow-hidden group"
+                            variants={buttonHoverEffect}
+                            initial="rest"
+                            whileHover="hover"
+                          >
+                            <div className="absolute inset-0 bg-white/10 transform translate-y-full 
+                              transition-transform group-hover:translate-y-0"></div>
+                            <span className="relative">View Project</span>
+                            <FaArrowRight className="relative text-xl transition-transform 
+                              group-hover:translate-x-1" />
+                          </motion.a>
+                          
+                          <motion.a
+                            href={`https://github.com/Calvinyeb04/${project.github}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-white/10 p-3 rounded-xl group
+                              hover:bg-white/20 transition-all duration-300"
+                            variants={buttonHoverEffect}
+                            initial="rest"
+                            whileHover="hover"
+                          >
+                            <FaGithub className="text-2xl text-white transition-transform 
+                              group-hover:scale-110" />
+                          </motion.a>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+              
+              <motion.button 
+                onClick={() => setShowAllProjects(!showAllProjects)}
+                className="inline-flex items-center gap-3 bg-gradient-to-r 
+                  from-purple-600 to-pink-600 text-white px-10 py-4 rounded-xl 
+                  transition-all duration-300 shadow-lg shadow-purple-500/30 
+                  hover:shadow-xl relative overflow-hidden group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="absolute inset-0 bg-white/10 transform translate-y-full 
+                  transition-transform group-hover:translate-y-0"></div>
+                <span className="relative text-lg font-semibold">
+                  {showAllProjects ? 'Show Less' : 'View More Projects'}
+                </span>
+                <motion.div
+                  animate={{ 
+                    rotate: showAllProjects ? 180 : 0,
+                    x: showAllProjects ? -5 : 5 
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="relative"
+                >
+                  <FaArrowRight className="text-xl" />
+                </motion.div>
+              </motion.button>
             </motion.div>
           </div>
         </section>
@@ -986,6 +1317,31 @@ export default function Home() {
           {/* Add some decorative elements */}
           <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/10 to-transparent"></div>
         </section>
+
+        {/* Add a floating tech stack indicator */}
+        <motion.div
+          className="fixed bottom-8 right-8 bg-black/90 backdrop-blur-lg
+            rounded-full py-2 px-4 border border-white/10 shadow-xl
+            flex items-center gap-3 z-50"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
+        >
+          <span className="text-white/80 text-sm">Built with:</span>
+          <div className="flex gap-2">
+            <SiReact className="text-blue-400 text-xl" title="React" />
+            <SiNextdotjs className="text-white text-xl" title="Next.js" />
+            <SiTailwindcss className="text-cyan-400 text-xl" title="Tailwind CSS" />
+            <FaCode className="text-purple-400 text-xl" title="TypeScript" />
+          </div>
+        </motion.div>
+
+        {/* Add a scroll progress indicator */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r 
+            from-blue-500 to-purple-500 transform origin-left z-50"
+          style={{ scaleX: scrollYProgress }}
+        />
       </main>
     </>
   );
