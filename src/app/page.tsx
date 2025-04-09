@@ -1,14 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { BsLightningChargeFill } from 'react-icons/bs';
-import { FaArrowRight, FaAws, FaBitcoin, FaBrain, FaBriefcase, FaCertificate, FaChartLine, FaCheckCircle, FaChurch, FaCloud, FaCode, FaCogs, FaDatabase, FaDocker, FaEnvelope, FaFile, FaFilm, FaGithub, FaGoogle, FaGraduationCap, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaLinkedin, FaMicrosoft, FaMobile, FaMobileAlt, FaNetworkWired, FaPhone, FaProjectDiagram, FaRobot, FaRocket, FaServer, FaSyncAlt, FaTools, FaTrophy, FaTruck, FaVideo, FaWallet, FaSearch, FaUsers } from 'react-icons/fa';
-import { IoIosSpeedometer } from 'react-icons/io';
+import { FaArrowRight, FaAws, FaBitcoin, FaBrain, FaBriefcase, FaCertificate, FaChartLine, FaCheckCircle, FaChurch, FaCloud, FaCode, FaCogs, FaDocker, FaEnvelope, FaFile, FaFilm, FaGithub, FaGoogle, FaGraduationCap, FaHandshake, FaJava, FaLaptopCode, FaLightbulb, FaLinkedin, FaMicrosoft, FaMobile, FaNetworkWired, FaProjectDiagram, FaRobot, FaRocket, FaServer, FaSyncAlt, FaTools, FaTruck, FaVideo, FaWallet, FaSearch, FaUsers } from 'react-icons/fa';
 import { SiCplusplus, SiDocker, SiFigma, SiGit, SiJavascript, SiMongodb, SiMysql, SiNodedotjs, SiPython, SiReact, SiTailwindcss, SiTypescript, SiNextdotjs } from 'react-icons/si';
-
-
 
 // Dynamically import Spline component with loading fallback
 const SplineComponent = dynamic(() => import('@/components/SplineComponent'), {
@@ -35,7 +31,7 @@ export default function Home() {
   
   // Simplified Spline load handler
   const handleSplineLoad = useCallback(() => {
-    setSplineLoaded(prev => prev + 1);
+    console.log('Spline loaded');
   }, []);
 
   // Preload essential assets
